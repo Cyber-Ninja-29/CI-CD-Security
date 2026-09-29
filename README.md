@@ -720,6 +720,8 @@ Then evaluate it against the OWASP LLM/Agentic AI/MCP risk categories you were a
 
 The resulting project is essentially a DevSecOps Agentic Security Platform:
 
+
+
           Git / CI-CD
               │
        ┌──────┴──────┐
