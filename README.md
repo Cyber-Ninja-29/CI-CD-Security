@@ -1,6 +1,3 @@
-# CI-CD-Security
-Monitoring CI/CD Pipeline Security with AI agent
-
 The architecture should look like this:
 
                          Git Push / PR
@@ -36,14 +33,9 @@ The architecture should look like this:
                 │                           │
                 ▼                           ▼
              CI/CD                      Deployment
-
-
-
 1. Give the agent tools, not direct access
 
 Your AI agent should have controlled tools such as:
-
-Diagram:
 
 get_sonarqube_findings()
 get_snyk_findings()
@@ -62,10 +54,8 @@ Avoid giving it:
 
 execute_shell()
 kubectl_anything()
-
 delete_production()
 run_arbitrary_sql()
-
 
 The distinction is important:
 
@@ -83,12 +73,9 @@ Authorization
  ▼
 Actual system
 
-
 rather than:
 
 LLM ───────────────► Production
-
-
 2. Create a Pipeline Security Agent
 
 For example, call it:
@@ -117,9 +104,7 @@ The agent receives something like:
   "environment": "staging"
 }
 
-
 Then it calls its tools.
-
 
 3. Agent calls SonarQube
 
@@ -143,9 +128,11 @@ Result:
   ]
 }
 
-
 The agent doesn't immediately block the deployment.
 
+It asks:
+
+Is this exploitable? Is the vulnerable code reachable? Is this a new finding?
 
 4. Agent calls Snyk
 
@@ -172,8 +159,6 @@ Application vulnerability
 Snyk
     ↓
 Dependency vulnerability
-
-
 5. Agent calls Trivy
 
 Next:
@@ -206,8 +191,6 @@ Dependencies
 Container
    +
 Infrastructure
-
-
 6. The interesting part: correlation
 
 This is where an AI agent becomes useful.
@@ -230,6 +213,7 @@ Application:
 Internet-facing
 
 The agent can correlate the evidence:
+
 SQL Injection
       │
       ├── New code
@@ -257,6 +241,7 @@ Not reachable
 The technical severity from SonarQube may still be HIGH, but the deployment context is different.
 
 This is why you shouldn't blindly use:
+
 CVSS = deployment decision
 
 Instead:
@@ -766,4 +751,3 @@ The resulting project is essentially a DevSecOps Agentic Security Platform:
        │             │
        ▼             ▼
     Developer     Deployment
-
